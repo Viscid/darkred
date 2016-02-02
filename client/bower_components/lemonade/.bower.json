@@ -1,0 +1,21 @@
+{
+  "name": "lemonade",
+  "main": "css/lemonade.min.css",
+  "author": "Joe Richardson",
+  "ignore": [
+    "README.md",
+    "bower.json",
+    "index.html"
+  ],
+  "homepage": "https://github.com/dope/lemonade",
+  "_release": "6def44694a",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "6def44694a42509b85f14239efd9a33806470bd6"
+  },
+  "_source": "git://github.com/dope/lemonade.git",
+  "_target": "*",
+  "_originalSource": "lemonade",
+  "_direct": true
+}

@@ -1,0 +1,94 @@
+$font-stack: 'Noto Sans', sans-serif;
+$primary-color: #800;
+$primary-color-dark: #600;
+$secondary-color: #DA7;
+$background-grey: #050505;
+$background-image: '/images/bgPattern.png';
+$lighter-grey: #1d1d1d;
+
+body {
+  font: 100% $font-stack;
+  color: $primary-color;
+  background-color: $background-grey;
+  background-image: url($background-image);
+  color: white;
+}
+
+/* General */
+
+a {
+  color: $secondary-color;
+  text-decoration: none;
+  font-weight: bold;
+
+}
+
+.dark-box {
+  background-color: $lighter-grey;
+  margin: 5em auto;
+  box-shadow: 4px 4px 14px 0px rgba(0,0,0,1);
+  width: 400px;
+}
+
+.dark-box h3 {
+  padding: 0.5em;
+  text-align: center;
+  background-color: #333;
+  font-size: 1.1em;
+  font-weight: bold;
+  background: linear-gradient(to bottom, #333 0%,#1d1d1d 100%);
+}
+
+.dark-box-content {
+  text-align: left;
+  padding: 1em;
+}
+
+.dark-box-content label {
+  font-weight: bold;
+  display: inline;
+}
+
+
+/* Login */
+
+input {
+  padding: 0.5em;
+  height: 30px;
+  border-radius: 3px;
+  width: 100%;
+  margin: 1em 0 0 0;
+  color: black;
+}
+
+fieldset {
+  border: none;
+}
+
+button {
+  padding: 4px;
+  background-color: $primary-color;
+  border: none;
+  margin-top: 1em;
+  width: 100%;
+  transition: all 0.3s ease 0s;
+}
+
+button:hover {
+  background: $primary-color-dark;
+}
+
+.login-form {
+  text-align: center;
+}
+
+.login-goto-register {
+  text-align: right;
+  font-size: 0.75em;
+  padding-right: 1em;
+}
+
+//ng-cloak
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}

@@ -1,0 +1,15 @@
+<div class="dark-box">
+  <h3>Log in, buddy. </h3>
+  <div class="dark-box-content">
+    <form class="login-form" ng-submit="login()">
+      <fieldset>
+        <input type="text" placeholder="Username" name="username" ng-model="loginForm.username" id="usernameInput" required/>
+        <input type="password" placeholder="Password" name="password" ng-model="loginForm.password" id="passwordInput" required/>
+        <button type="submit" class="">Yeah.</button>
+      </fieldset>
+    <form>
+    <div class="login-goto-register">
+      (or <a ui-sref="register">register</a>)
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+{
+  "name": "darkred-client",
+  "authors": [
+    "Mark Gillis <viscid@gmail.com>"
+  ],
+  "description": "A client for dark.red",
+  "main": "index.html",
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "homepage": "http://www.dark.red",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "normalize-css": "normalize.css#~3.0.3",
+    "lemonade": "*",
+    "angular-ui-router": "~0.2.15"
+  }
+}
