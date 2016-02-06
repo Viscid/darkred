@@ -10,7 +10,7 @@ $scope.register = function () {
   AuthService.register($scope.registrationForm)
 
   .then(function() {
-    $state.go('login');
+    $state.go('main');
     $scope.disabled = false;
     $scope.registrationForm = {};
   })

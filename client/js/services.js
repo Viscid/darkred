@@ -48,52 +48,21 @@ angular.module('darkred').factory('AuthService', ['$q', '$timeout', '$http', 'Au
       var deferred = $q.defer();
 
       $http.post('/user/me', {
-        token: token
-      })
-      .then(function(data) {
-        if (data.status === 200) {
-          user = data.data.user;
-          deferred.resolve();
-        } else {
-          user = false;
-          deferred.reject();
-        }
-      });
+          token: token
+        })
+        .then(function(data) {
+          if (data.status === 200) {
+            user = data.data.user;
+            deferred.resolve();
+          } else {
+            user = false;
+            deferred.reject();
+          }
+        });
 
       return deferred.promise;
     }
 
-
-    // function loginWithToken(token) {
-    //
-    //   var deferred = $q.defer();
-    //
-    //   $http.post('/user/login/token', {
-    //       token: token
-    //     })
-    //     .then(
-    //       function(data) {
-    //         if (data.status === 200 && data.data.user) {
-    //           user = data.data.user;
-    //           AuthTokenFactory.setToken(user.token);
-    //           console.log('token login success');
-    //           deferred.resolve();
-    //         } else {
-    //           user = false;
-    //           deferred.reject();
-    //           AuthTokenFactory.clearToken();
-    //           console.log('token login failure');
-    //         }
-    //       },
-    //       function(data) {
-    //         user = false;
-    //         deferred.reject();
-    //         AuthTokenFactory.clearToken();
-    //         console.log('token login failure');
-    //       });
-    //
-    //   return deferred.promise;
-    // }
 
     function logout() {
       var deferred = $q.defer();
@@ -102,13 +71,13 @@ angular.module('darkred').factory('AuthService', ['$q', '$timeout', '$http', 'Au
         .then(
           function(data) {
             user = false;
-            $window.localStorage.clear();
+            AuthTokenFactory.clearToken();
 
             deferred.resolve();
           },
           function(data) {
             user = false;
-            $window.localStorage.clear();
+            AuthTokenFactory.clearToken();
 
             deferred.reject();
           });
@@ -120,7 +89,6 @@ angular.module('darkred').factory('AuthService', ['$q', '$timeout', '$http', 'Au
       isLoggedIn: isLoggedIn,
       getUser: getUser,
       login: login,
-      // loginWithToken: loginWithToken,
       getUserFromToken: getUserFromToken,
       logout: logout,
       register: register
@@ -134,12 +102,13 @@ angular.module('darkred').factory('AuthService', ['$q', '$timeout', '$http', 'Au
           username: registrationInfo.username,
           password: registrationInfo.password
         })
-        .then(function success(response) {
-            console.log('Success: ' + response);
+        .then(function(data) {
+            user = data.data.user;
+            console.log(data.data);
+            AuthTokenFactory.setToken(data.data.token);
             deferred.resolve();
           },
-          function failure(response) {
-            console.log('Failure: ' + response);
+          function(data) {
             deferred.reject();
           });
 

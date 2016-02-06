@@ -1,6 +1,5 @@
 angular.module('darkred').controller('loginController', function($scope, $state, AuthService, $rootScope) {
   if ($rootScope.user) { // User is already logged in!
-    console.log('user is already logged in1');
     $state.go('main');
   }
 

@@ -7,9 +7,10 @@ angular.module('darkred', ['ui.router'], function config($httpProvider) {
   $stateProvider.state('main', {
     url: '/',
     templateUrl: '/partials/main.html',
-    controller: 'mainController',
-    cache: false
+    controller: 'mainController'
   });
+
+  /* Authentication Routes */
 
   $stateProvider.state('login', {
     url: '/login',
@@ -28,6 +29,16 @@ angular.module('darkred', ['ui.router'], function config($httpProvider) {
     controller: 'logoutController'
   });
 
+  /* Post Routes */
+
+  $stateProvider.state('post', {
+    url: '/post/:postId',
+    templateUrl: '/partials/reply.html',
+    controller: 'postController'
+  })
+
+
+
   $urlRouterProvider.otherwise('/');
 
 })
@@ -38,14 +49,11 @@ angular.module('darkred', ['ui.router'], function config($httpProvider) {
     if (!$rootScope.user) {
       var token = $window.localStorage.getItem('auth-token');
       if (token) {
-        console.log('logging in user with token');
         AuthService.getUserFromToken(token).then(function() {
           $rootScope.user = AuthService.getUser();
           $rootScope.$broadcast('userUpdate', {user: $rootScope.user});
         })
       }
-    } else {
-      console.log($rootScope.user);
     }
   })
 });

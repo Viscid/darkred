@@ -1,9 +1,14 @@
-angular.module('darkred').controller('mainController', function($scope, $state, AuthService, $rootScope, $timeout) {
-$timeout(function() {
-    if (!$rootScope.user) {
-      console.log('User not logged in, redirecting...')
-      $state.go('login');
-    }
-}, 2000)
+angular.module('darkred').controller('mainController', function($scope, $state, $rootScope, $timeout, PostFactory) {
+  if (!$rootScope.user) { $state.go('login'); } else {
+
+  $scope.postFunction = function() {
+    PostFactory.getPosts().then(function(results) {
+      $scope.threads = results.threads;
+    });
+  };
+
+  $scope.postFunction();
+
+}
 
 })

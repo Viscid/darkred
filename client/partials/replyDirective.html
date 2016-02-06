@@ -1,0 +1,18 @@
+<li class="reply">
+  <div class="thread-reply-button">
+    <a ui-sref="post({postId: id})"> Reply </a>
+  </div>
+  <span class="reply-author">{{author}}</span> -
+  <span class="reply-date">{{datetime | date : 'h:mm a - MMMM d, y'}}</span>
+  <p class="reply-body"> {{body}} </p>
+</li>
+
+
+<ul class="reply-list" ng-if="hasReplies">
+   <reply ng-repeat="reply in replies"
+   id="{{reply._id}}"
+   author="{{reply.author}}"
+   datetime="{{reply.datetime}}"
+   body="{{reply.body}}">
+  </reply>
+</ul>

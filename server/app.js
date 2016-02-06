@@ -27,9 +27,8 @@ var app = express();
 app.use(expressJwt({ secret: jwtSecret, credentialsRequired: false }));
 
 // require routes
-var userController = require('./controllers/user.js');
-
-
+var userController = require('./controllers/user');
+var postController = require('./controllers/post')
 
 // define middleware
 app.use(express.static(path.join(__dirname, '../client')));
@@ -55,19 +54,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-//check for token
-app.use(function(req, res, next) {
-  if (req.user) {
-    console.log('User is logged in: ');
-    console.log(req.user);
-  }
-  next();
-});
-
-
-
 // routes
 app.use('/user/', userController);
+app.use('/post/', postController);
 
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '../client', 'index.html'));

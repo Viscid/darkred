@@ -17,7 +17,7 @@ router.post('/register', function(req, res) {
   User.register(new User({
     email: email,
     username: username
-  }), password, function(error) {
+  }), password, function(error, model) {
     if (error) {
       if (error.code === 11000) // Duplicate e-mail
       {
@@ -29,8 +29,27 @@ router.post('/register', function(req, res) {
           error: error
         });
       }
-    } else {
-      res.status(200).send(); // User successfully created.
+    } else { // User successfully created.
+
+      var username = model.username,
+        password = model.password,
+        id = model._id.toString();
+
+      var token = jwt.sign({
+        username: username,
+        id: id
+      }, jwtSecret);
+
+      var response = {
+        user: {
+          username: username,
+          id: id
+        },
+        token: token
+      }
+
+      res.send(response);
+
     }
   });
 });
@@ -43,19 +62,19 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
     id = req.user.id;
 
   var token = jwt.sign({
-    user: {
-      username: username,
-      id: id
-    }
+    username: username,
+    id: id
   }, jwtSecret);
 
-  res.send({
+  var response = {
     user: {
       username: username,
       id: id
     },
     token: token
-  });
+  }
+
+  res.send(response);
 
 
 });
@@ -72,8 +91,6 @@ router.post('/me', function(req, res) {
   });
 
 })
-
-router.post('/login')
 
 router.get('/logout', function(req, res) {
   console.log("Location: /user/logout");
