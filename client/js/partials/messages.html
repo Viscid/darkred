@@ -1,0 +1,23 @@
+<div class="return-link">
+  <a ui-sref="main">Return</a>
+</div>
+
+<h1> Messages </h1>
+
+<div class="messages-list" ng-repeat="message in messages">
+
+  <div class="thread" style="margin: 2em 0;" ng-if="!message.read">
+    <span class="messages-list-sender"> <a ui-sref="profile({username: message._sender.username})">{{message._sender.username}}</a>:</span> -
+    <span class="messages-list-datetime"> {{message.datetime | date : 'MMMM d, y @ h:mm a' }} </span>
+
+    <p class="thread-body"> {{message.body}} </p>
+  </div>
+
+  <div class="message-read" ng-if="message.read">
+    <span class="messages-list-sender"> <a ui-sref="profile({username: message._sender.username})">{{message._sender.username}}</a>:</span>
+    <span class="messages-list-body"> {{message.body}} </span> -
+    <span class="messages-list-datetime"> {{message.datetime | date : 'MMMM d, y @ h:mm a' }} </span>
+  </div>
+
+
+</div>

@@ -1,11 +1,12 @@
 var express = require('express');
 var passport = require('passport');
-var User = require('../models/user.js');
+var User = require('../models/user'),
+    UserProfile = require('../models/userProfile');
 var router = express.Router();
 
 var jwt = require('jsonwebtoken');
 
-var jwtSecret = 'jwtsecretcode';
+var jwtSecret = require('../jwtsecret.js');
 
 router.post('/register', function(req, res) {
   console.log("Location: /user/register");
@@ -17,7 +18,7 @@ router.post('/register', function(req, res) {
   User.register(new User({
     email: email,
     username: username
-  }), password, function(error, model) {
+  }), password, function(error, user) {
     if (error) {
       if (error.code === 11000) // Duplicate e-mail
       {
@@ -31,9 +32,12 @@ router.post('/register', function(req, res) {
       }
     } else { // User successfully created.
 
-      var username = model.username,
-        password = model.password,
-        id = model._id.toString();
+      var username = user.username,
+        password = user.password,
+        id = user._id;
+
+        UserProfile.create({_user: user._id, lastPost: null, numPosts: 0, regDate: new Date(), lastLogin: new Date()});
+
 
       var token = jwt.sign({
         username: username,
@@ -74,8 +78,8 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
     token: token
   }
 
+  UserProfile.findOneAndUpdate({_user: id}, {lastLogin: new Date()}).exec();
   res.send(response);
-
 
 });
 
@@ -89,6 +93,8 @@ router.post('/me', function(req, res) {
       id: id
     }
   });
+
+  UserProfile.findOneAndUpdate({_user: id}, {lastLogin: new Date()}).exec();
 
 })
 

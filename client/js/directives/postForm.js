@@ -1,10 +1,24 @@
-angular.module('darkred').directive('postForm', ['PostFactory', function(PostFactory) {
+angular.module('darkred').directive('postForm', ['PostFactory', '$window', function(PostFactory, $window) {
   return {
     restrict: 'E',
-    templateUrl: './partials/postFormDirective.html',
+    templateUrl: './js/partials/postFormDirective.html',
     link: function(scope, element) {
+      scope.$watch('focused', function(focused) {
+        setTimeout(function() {
+          var textarea = $window.document.getElementById('newThreadTextarea');
+          if (textarea)
+          {
+            textarea.innerHTML = "";
+            textarea.focus();
+            if (scope.post && scope.post.body)
+            {
+              scope.post.body = "";
+            }
+          }
+        }, 25);
+      });
+
       scope.newPost = function(body) {
-        console.log(scope);
         if (scope.id) {
           PostFactory.reply(scope.id, body).then(function() {
             scope.postFunction();
@@ -18,7 +32,8 @@ angular.module('darkred').directive('postForm', ['PostFactory', function(PostFac
     },
     scope: {
       postFunction: "&",
-      id: "@"
+      id: "@",
+      focused: "="
     }
   }
 }]);

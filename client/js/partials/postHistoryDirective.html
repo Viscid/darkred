@@ -1,0 +1,8 @@
+<div class="profile-post-history">
+  <h3> Last 20 Posts </h3>
+  <div class="profile-post-history-post" ng-repeat="post in postHistory">
+    <a ui-sref="profile({username: post.author})" class="thread-author">{{post.author}}</a> -
+    <span class="thread-date">{{post.datetime | date : 'h:mm a - MMMM d, y'}}</span>
+    <p class="thread-body"> <a ui-sref="post({postId: post._id})"> {{post.body}} </a> </p>
+  </div>
+</div>

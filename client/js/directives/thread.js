@@ -2,7 +2,7 @@ angular.module('darkred').directive('thread', ['PostFactory', function(PostFacto
 
   return {
     restrict: 'E',
-    templateUrl: './partials/threadDirective.html',
+    templateUrl: './js/partials/threadDirective.html',
     link: function(scope) {
       scope.$watch('threadId', function(newval, oldval) {
 
@@ -10,7 +10,7 @@ angular.module('darkred').directive('thread', ['PostFactory', function(PostFacto
         if (scope.replies) {
           scope.hasReplies = true;
         }
-        
+
       })
 
 

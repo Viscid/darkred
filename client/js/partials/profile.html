@@ -1,0 +1,53 @@
+<div class="return-link">
+  <a ui-sref="main">Return</a>
+</div>
+<div class="profile-container">
+  <div class="profile">
+    <h2> {{profile._user.username}} </h2>
+      <div class="profile-item-container">
+        <ul>
+          <li ng-show="profile.location">
+            <span class="profile-item-name"> Location: </span>
+            {{profile.location}}
+          </li>
+
+          <li ng-show="profile.website">
+            <span class="profile-item-name">Website: </span>
+            <a href="{{profile.website}}">{{profile.website}} </a>
+          </li>
+
+          <li ng-show="profile.numPosts">
+            <span class="profile-item-name">Posts: </span>
+            {{profile.numPosts}}
+          </li>
+
+          <li ng-show="profile.regDate">
+            <span class="profile-item-name">Registration Date: </span>
+            {{profile.regDate | date : 'MMMM d, y @ h:mm a'}}
+          </li>
+
+          <li ng-show="profile.lastPost">
+            <span class="profile-item-name">Last Post: </span>
+            {{profile.lastPost | date : 'MMMM d, y @ h:mm a'}}
+          </li>
+
+          <li ng-show="profile.lastLogin">
+            <span class="profile-item-name"> Last Login: </span>
+            {{profile.lastLogin | date : 'MMMM d, y @ h:mm a' }}
+          </li>
+        </ul>
+      </div>
+
+  </div>
+  <div class="profile-message">
+    <h2 class="profile-message-header"> Message {{profile._user.username}} </h2>
+    <div class="profile-message-send-container" style="text-align: center;">
+      <form ng-submit="sendMessage(profile._user._id, messageBody)">
+      <textarea ng-model="messageBody"></textarea>
+      <button type="submit">Send</button>
+    </form>
+    </div>
+  </div>
+</div>
+
+<post-history user="profile._user"></post-history>

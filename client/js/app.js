@@ -6,7 +6,7 @@ angular.module('darkred', ['ui.router'], function config($httpProvider) {
 
   $stateProvider.state('main', {
     url: '/',
-    templateUrl: '/partials/main.html',
+    templateUrl: 'js/partials/main.html',
     controller: 'mainController'
   });
 
@@ -14,13 +14,13 @@ angular.module('darkred', ['ui.router'], function config($httpProvider) {
 
   $stateProvider.state('login', {
     url: '/login',
-    templateUrl: '/partials/login.html',
+    templateUrl: 'js/partials/login.html',
     controller: 'loginController'
   });
 
   $stateProvider.state('register', {
     url: '/register',
-    templateUrl: '/partials/register.html',
+    templateUrl: 'js/partials/register.html',
     controller: 'registerController'
   });
 
@@ -29,13 +29,38 @@ angular.module('darkred', ['ui.router'], function config($httpProvider) {
     controller: 'logoutController'
   });
 
-  /* Post Routes */
+  /* Post Route */
 
   $stateProvider.state('post', {
     url: '/post/:postId',
-    templateUrl: '/partials/reply.html',
+    templateUrl: 'js/partials/post.html',
     controller: 'postController'
   })
+
+  /* User Route */
+
+  $stateProvider.state('profile', {
+    url: '/profile/:username',
+    controller: 'profileController',
+    templateUrl: 'js/partials/profile.html',
+  });
+
+  /* Search Route */
+
+  $stateProvider.state('search', {
+    url: '/search/:searchTerm',
+    controller: 'searchController',
+    templateUrl: 'js/partials/search.html',
+  });
+
+  /* Messages Route */
+
+    $stateProvider.state('messages', {
+      url: '/messages',
+      controller: 'messagesController',
+      templateUrl: 'js/partials/messages.html',
+    });
+
 
 
 
@@ -51,7 +76,9 @@ angular.module('darkred', ['ui.router'], function config($httpProvider) {
       if (token) {
         AuthService.getUserFromToken(token).then(function() {
           $rootScope.user = AuthService.getUser();
-          $rootScope.$broadcast('userUpdate', {user: $rootScope.user});
+          $rootScope.$broadcast('userUpdate', {
+            user: $rootScope.user
+          });
         })
       }
     }

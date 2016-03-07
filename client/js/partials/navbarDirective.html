@@ -1,0 +1,12 @@
+<div class="navbar">
+  <search-box></search-box>
+  <a class="navbar-username" ui-sref="profile({username: user.username})">{{user.username}}</a>
+  <a ui-sref="logout"> (log out) </a>
+
+  <div class="navbar-links">
+    <ul class="navbar-link-list">
+      <li class="navbar-link-list-item"> <a ui-sref="messages" ui-sref-opts="{reload:true}">Private Messages </a> <span class="navbar-messages-new-count" ng-show="messageCount > 0"> - {{messageCount}} New! </span> </li>
+    </ul>
+  </div>
+
+</div>

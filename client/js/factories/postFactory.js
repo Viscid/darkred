@@ -1,6 +1,7 @@
 angular.module('darkred').factory('PostFactory', ['$http', '$q', function($http, $q) {
 
   var currentReplies = {};
+  var replyOrder;
 
   function getReplies(id) {
     if (currentReplies && currentReplies[id])
@@ -9,6 +10,16 @@ angular.module('darkred').factory('PostFactory', ['$http', '$q', function($http,
     } else {
       return false;
     }
+  }
+
+  function getReplyOrder(id) {
+    if (replyOrder[id] < 9)
+    {
+      return replyOrder[id];
+    } else {
+      return 9;
+    }
+
   }
 
   function post(body) {
@@ -40,9 +51,12 @@ angular.module('darkred').factory('PostFactory', ['$http', '$q', function($http,
     var deferred = $q.defer();
 
     $http.get('/post/all').then(function(data) {
-        currentReplies = data.data.replyList;
 
-        deferred.resolve({threads: data.data.threads, replies: data.data.replyList});
+
+        currentReplies = data.data.replyList;
+        replyOrder = data.data.replyOrder;
+
+        deferred.resolve({threads: data.data.threads, replies: data.data.replyList, lastGrabbed: data.data.grabbed});
       },
       function(error) {
         console.log('Error: ', error);
@@ -68,12 +82,30 @@ angular.module('darkred').factory('PostFactory', ['$http', '$q', function($http,
     return deferred.promise;
   }
 
+  function getPostHistory(userId) {
+    var deferred = $q.defer();
+
+    $http.get('/post/user/' + userId).then(function(data) {
+
+        postHistory = data.data;
+        deferred.resolve(postHistory);
+      },
+      function(error) {
+        console.log('Error: ', error);
+        deferred.reject(error);
+      });
+
+    return deferred.promise;
+  }
+
   return {
     post: post,
     getPosts: getPosts,
     reply: reply,
     getSinglePost: getSinglePost,
-    getReplies: getReplies
+    getReplies: getReplies,
+    getReplyOrder: getReplyOrder,
+    getPostHistory: getPostHistory
   };
 
 

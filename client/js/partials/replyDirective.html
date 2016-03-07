@@ -1,0 +1,15 @@
+<li class="reply">
+  <a ui-sref="profile({username: author})" class="reply-author">{{author}}</a>
+  <span class="reply-date">@ {{datetime | date : 'h:mm a'}}</span>:<span class="reply-body" style="cursor: pointer" ui-sref="post({postId: id})">{{body}}</span>
+</li>
+
+
+<ul class="reply-list" ng-if="hasReplies">
+   <reply ng-repeat="reply in replies"
+   id="{{reply._id}}"
+   order="reply.replyOrder"
+   author="{{reply.author}}"
+   datetime="{{reply.datetime}}"
+   body="{{reply.body}}">
+  </reply>
+</ul>

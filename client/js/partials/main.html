@@ -1,0 +1,8 @@
+<div class="newPosts" ng-if="postCount == 1"> <a ng-click="postFunction()"> There is a new post!   </a> </div>
+<div class="newPosts" ng-if="postCount > 1"> <a ng-click="postFunction()"> There are {{postCount}} new posts! </a> </div>
+
+<a style="color: grey; cursor: pointer;" ng-click="togglePostForm()">New Thread</a>
+
+<post-form focused="newPost" ng-show="newPost" post-function="postFunction()"> </post-form>
+
+<thread ng-repeat="thread in threads track by $index" thread-id="{{thread._id}}" author="{{thread.author}}" date="{{thread.datetime}}" body="{{thread.body}}"></thread>

@@ -1,23 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="darkred">
 
 <head>
   <title>dark.red</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8">
 
-  <!-- <link href='https://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'> -->
+  <link href='https://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'>
 
   <!-- build:css /css/site.css -->
   <link rel="stylesheet" href="/bower_components/normalize-css/normalize.css" />
-  <link rel="stylesheet" href="/bower_components/lemonade/css/lemonade.css" />
   <link rel="stylesheet" href="/css/main.css" media="screen" charset="utf-8" />
   <!-- endbuild -->
 
+  <script src="./js/socket.io-1.4.5.js"></script>
+
 </head>
 
-<body ng-app="darkred">
-  <div class="frame ng-cloak">
+<body>
+  <div class="ng-cloak">
 
     <navbar ng-show="user" ng-class="navbar"></navbar>
 
@@ -30,7 +31,13 @@
   <script src="/bower_components/angular/angular.js"></script>
   <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
   <script src="/js/app.js"></script>
-  <script src="/js/services.js"></script>
+
+  <script src="/js/factories/AuthServices.js"></script>
+  <script src="/js/factories/postFactory.js"></script>
+  <script src="/js/factories/profileFactory.js"></script>
+  <script src="/js/factories/searchFactory.js"></script>
+  <script src="/js/factories/messageFactory.js"></script>
+  <script src="/js/factories/ajaxFactory.js"></script>  
 
   <script src="/js/controllers/loginController.js"></script>
   <script src="/js/controllers/registerController.js"></script>
@@ -38,17 +45,17 @@
   <script src="/js/controllers/mainController.js"></script>
   <script src="/js/controllers/navController.js"></script>
   <script src="/js/controllers/postController.js"></script>
-
+  <script src="/js/controllers/profileController.js"></script>
+  <script src="/js/controllers/searchController.js"></script>
+  <script src="/js/controllers/messagesController.js"></script>
 
   <script src="/js/directives/recursionHelper.js"></script>
   <script src="/js/directives/reply.js"></script>
   <script src="/js/directives/navbar.js"></script>
   <script src="/js/directives/postForm.js"></script>
   <script src="/js/directives/thread.js"></script>
-
-
-  <script src="/js/factories/postFactory.js"></script>
-
+  <script src="/js/directives/profilePostHistory.js"></script>
+  <script src="/js/directives/searchBox.js"></script>
 
   <!-- endbuild -->
 

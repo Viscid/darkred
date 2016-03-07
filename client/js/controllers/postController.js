@@ -19,7 +19,7 @@ angular.module('darkred').controller('postController', function($state, $rootSco
   $scope.postFunction = function() {
     PostFactory.getSinglePost($stateParams.postId).then(function(post) {
       $scope.getPost();
-      refresh();
+      $state.go('main');
     });
   }
 });

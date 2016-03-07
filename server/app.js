@@ -1,24 +1,25 @@
 // dependencies
 var express = require('express'),
-  logger = require('morgan'),
-  cookieParser = require('cookie-parser'),
-  bodyParser = require('body-parser'),
-  expressSession = require('express-session'),
-  mongoose = require('mongoose'),
-  hash = require('bcrypt-nodejs'),
-  path = require('path'),
-  passport = require('passport'),
-  localStrategy = require('passport-local').Strategy,
-  jwt = require('jsonwebtoken'),
-  expressJwt = require('express-jwt');
+    logger = require('morgan'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    expressSession = require('express-session'),
+    mongoose = require('mongoose'),
+    hash = require('bcrypt-nodejs'),
+    path = require('path'),
+    passport = require('passport'),
+    localStrategy = require('passport-local').Strategy,
+    jwt = require('jsonwebtoken'),
+    expressJwt = require('express-jwt');
 
-var jwtSecret = 'jwtsecretcode';
+var jwtSecret = require('./jwtsecret.js');
 
 // mongoose
 mongoose.connect('mongodb://localhost/darkred');
 
 // user schema/model
 var User = require('./models/user.js');
+
 passport.use(User.createStrategy());
 
 // create instance of express
@@ -28,7 +29,10 @@ app.use(expressJwt({ secret: jwtSecret, credentialsRequired: false }));
 
 // require routes
 var userController = require('./controllers/user');
-var postController = require('./controllers/post')
+var postController = require('./controllers/post');
+var userProfileController = require('./controllers/userProfile');
+var messageController = require('./controllers/message');
+var ajaxController = require('./controllers/ajax')
 
 // define middleware
 app.use(express.static(path.join(__dirname, '../client')));
@@ -39,24 +43,46 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser());
 
+var MongoStore = require('connect-mongo')(expressSession);
+
 // passport middleware
-app.use(require('express-session')({
+
+var mongoStore = new MongoStore({ url: 'mongodb://localhost/darkred' });
+
+app.use(expressSession({
   secret: '0z0z0z0z0z0099z8z7z6',
-  resave: false,
-  saveUninitialized: false
+  store: mongoStore,
+    resave: false,
+    saveUninitialized: false
 }));
-app.use(passport.initialize());
-app.use(passport.session());
+
+app.use(function(req, res, next) {
+  console.log(req.user);
+  next();
+});
+
+// Socket.io
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 
 // configure passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(function(req, res, next) {
+  next();
+});
+
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // routes
 app.use('/user/', userController);
 app.use('/post/', postController);
+app.use('/profile/', userProfileController);
+app.use('/message/', messageController);
+app.use('/ajax/', ajaxController);
 
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '../client', 'index.html'));

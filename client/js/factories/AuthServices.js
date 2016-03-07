@@ -20,7 +20,6 @@ angular.module('darkred').factory('AuthService', ['$q', '$timeout', '$http', 'Au
 
       var deferred = $q.defer();
 
-
       $http.post('/user/login', {
           username: username,
           password: password,
@@ -62,7 +61,6 @@ angular.module('darkred').factory('AuthService', ['$q', '$timeout', '$http', 'Au
 
       return deferred.promise;
     }
-
 
     function logout() {
       var deferred = $q.defer();
@@ -146,7 +144,6 @@ angular.module('darkred').factory('AuthTokenFactory', function AuthTokenFactory(
   }
 });
 
-
 angular.module('darkred').factory('AuthInterceptor', function AuthInterceptor(AuthTokenFactory) {
   return {
     request: addToken
@@ -160,6 +157,5 @@ angular.module('darkred').factory('AuthInterceptor', function AuthInterceptor(Au
     }
     return config;
   }
-
 
 });

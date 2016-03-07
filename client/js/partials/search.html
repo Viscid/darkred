@@ -1,0 +1,9 @@
+<h3 ng-show="searchTerm"> Searching for "{{searchTerm}}" </h3>
+
+<div ng-show="searchResults">
+  <div ng-repeat="result in searchResults" class="thread">
+    <a ui-sref="profile({username: result.obj.author})" class="thread-author">{{result.obj.author}}</a> -
+    <span class="thread-date">{{result.obj.datetime | date : 'h:mm a - MMMM d, y'}}</span>
+    <p class="thread-body"> <a ui-sref="post({postId: (result.obj.rootId ? result.obj.rootId : result.obj._id) })"> {{result.obj.body}} </a> </p>
+  </div>
+</div>
